@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!---Coding By CodingLab | www.codinglabweb.com--->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!--<title>Registration Form in HTML CSS</title>-->
+    <!---Custom CSS File--->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section class="container">
+      <img style="margin-left: 30%; height: 15x; width: 200px;" src="../images/logo.png">
+      
+      <header>Order Form</header>
+      <marquee style="color: red; ">Please Take A Screen Short Of Order ID Below For Future Refrance</marquee>
+      <form id="contactform" name="google-sheet" method="post" class="form">
+        <div class="input-box">
+          <label>Full Name</label>
+          <input type="text" name="FullName" placeholder="Enter full name" required />
+        </div>
+
+        <div class="input-box">
+          <label>Email Address</label>
+          <input type="email" name="Email" placeholder="Enter email address" required />
+        </div>
+
+        <div class="column">
+          <div class="input-box">
+            <label>Phone Number</label>
+            <input type="phone" name="Number" placeholder="Enter phone number" required />
+          </div>
+          <div class="input-box">
+            <label>Birth Date</label>
+            <input type="date" name="DOB" placeholder="Enter birth date" required />
+          </div>
+        </div>
+        <div class="gender-box">
+          <h3>Gender</h3>
+          <div class="gender-option">
+            <div class="gender">
+              <input type="radio" value="Male" id="check-male" name="gender" checked />
+              <label for="check-male">male</label>
+            </div>
+            <div class="gender">
+              <input type="radio" value="Female" id="check-female" name="gender" />
+              <label for="check-female">Female</label>
+            </div>
+            <div class="gender">
+              <input type="radio" value="Other" id="check-other" name="gender" />
+              <label for="check-other">prefer not to say</label>
+            </div>
+          </div>
+        </div>
+        <div class="input-box address">
+          <label>Address</label>
+          <input type="text" name="Address" placeholder="Enter street address" required />
+          
+            <div class="select-box">
+              <select name="Product">
+                <option hidden>Select product</option>
+                <option value="Business Card">Business Card</option>
+                <option value="Advertising banner">Advertising Banner</option>
+                <option value="Logo">Logo</option>
+                <option value="Invitation Card">Invitation Card</option>
+                <option value="ID card">ID Card</option>
+                <option value="Resume">Resume</option>
+                <option value="Cataloge">Cataloge</option>
+                <option value="Book Cover">Book Cover</option>
+                <option value="Social Midea Post">Social Mesia Post</option>
+                <option value="WallPaper">Wallpaper</option>
+                
+              </select>
+            </div>
+            
+          </div>
+        </div>
+        <br>
+        <!-- ttttttt -->
+        <div class="containerm">
+            Enter This Order Id On Blow Box  
+            <div class="input_field captch_box">
+              <input type="text" value="" disabled />
+              
+            </div>( Please Take A ScrenShort Of Order Id )
+                
+                    <div   id="capch" class="input_field captch_input">
+               
+                <div class="input-box address">
+                    <input name="Order_Id" type="text" class="input-box address" placeholder="Enter Order Id" />
+                </div>
+            </div>
+            
+            <div class="input_field button disabled">
+                <button class="refresh_button">
+                    <i class="fa-solid fa-rotate-right"></i>Generate New Code
+                  </button>
+            </div>
+          </div>
+      
+        <!-- ttttttt -->
+       
+        <a name="submit" id="submit" tabindex="5" value="Submit" type="submit"><button >Submit</button></a>
+      </form>
+    </section>
+
+    <script>// Selecting necessary DOM elements
+        const captchaTextBox = document.querySelector(".captch_box input");
+        const refreshButton = document.querySelector(".refresh_button");
+        const captchaInputBox = document.querySelector(".captch_input input");
+        const message = document.querySelector(".message");
+        const submitButton = document.querySelector(".button");
+        
+        // Variable to store generated captcha
+        let captchaText = null;
+        
+        // Function to generate captcha
+        const generateCaptcha = () => {
+          const randomString = Math.random().toString(36).substring(2, 7);
+          const randomStringArray = randomString.split("");
+          const changeString = randomStringArray.map((char) => (Math.random() > 0.5 ? char.toUpperCase() : char));
+          captchaText = changeString.join("   ");
+          captchaTextBox.value = captchaText;
+          console.log(captchaText);
+        };
+        
+        const refreshBtnClick = () => {
+          generateCaptcha();
+          captchaInputBox.value = "";
+          captchaKeyUpValidate();
+        };
+        
+        const captchaKeyUpValidate = () => {
+          //Toggle submit button disable class based on captcha input field.
+          submitButton.classList.toggle("disabled", !captchaInputBox.value);
+        
+          if (!captchaInputBox.value) message.classList.remove("active");
+        };
+        
+        // Function to validate the entered captcha
+        const submitBtnClick = () => {
+          captchaText = captchaText
+            .split("")
+            .filter((char) => char !== " ")
+            .join("");
+          message.classList.add("active");
+          // Check if the entered captcha text is correct or not
+          if (captchaInputBox.value === captchaText) {
+            message.innerText = "Entered captcha is correct";
+            message.style.color = "#826afb";
+          } else {
+            message.innerText = "Entered captcha is not correct";
+            message.style.color = "#FF2525";
+          }
+        };
+        
+        // Add event listeners for the refresh button, captchaInputBox, submit button
+        refreshButton.addEventListener("click", refreshBtnClick);
+        captchaInputBox.addEventListener("keyup", captchaKeyUpValidate);
+        submitButton.addEventListener("click", submitBtnClick);
+        
+        // Generate a captcha when the page loads
+        generateCaptcha();</script>
+
+        <script>
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxRWGScIeDfl9geHyQMopUAx4D5P-tA5bVSjDBTJ6bQYKotMy51Dh_tJPKmTjthNDXbDw/exec'
+            const form = document.forms['google-sheet']
+        
+            form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => alert("Your Order Is Successfuly Placed!...  | Please Send Your Order id {Scren Short} To WhatsApp"))
+                .catch(error => console.error('Error!', error.message))
+                submit.value = 'refresh';
+                form.reset();
+                           
+            })
+        </script> 
+
+        
+  </body>
+</html>
